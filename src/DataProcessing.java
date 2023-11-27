@@ -1,14 +1,16 @@
 import java.util.Arrays;
 
-class Calculated {
-    public static String result = null;
-    public static int number1;
-    public static int number2;
-    public static String romanNumeral1;
-    public static String romanNumeral2;
-    public static String stringComputation(String[] exampleArray){
+class DataProcessing {
+    public String result = null;
+    public int number1;
+    public int number2;
+    public String romanNumeral1;
+    public String romanNumeral2;
+
+    public String stringComputation(String[] exampleArray) {
+        Converter converter = new Converter();
         boolean isArabian = exampleArray[0].matches("\\d+") && exampleArray[1].matches("\\d+");
-        boolean isRoman = Arrays.asList(Converter.roman).contains(exampleArray[0]) && Arrays.asList(Converter.roman).contains(exampleArray[1]);
+        boolean isRoman = Arrays.asList(converter.roman).contains(exampleArray[0]) && Arrays.asList(converter.roman).contains(exampleArray[1]);
         if (isArabian) {
             number1 = Integer.parseInt(exampleArray[0]);
             number2 = Integer.parseInt(exampleArray[1]);
@@ -20,31 +22,31 @@ class Calculated {
         } else if (isRoman) {
             romanNumeral1 = exampleArray[0];
             romanNumeral2 = exampleArray[1];
-            number1 = Converter.converterToArabian(romanNumeral1);
-            number2 = Converter.converterToArabian(romanNumeral2);
+            number1 = converter.converterToArabian(romanNumeral1);
+            number2 = converter.converterToArabian(romanNumeral2);
             int arabianResult = calculation(number1, number2);
-            result = Converter.converterToRoman(arabianResult);
+            result = converter.converterToRoman(arabianResult);
         } else {
             throw new IllegalArgumentException("Используются одновременно разные системы счисления");
         }
         return result;
     }
 
-    public static int calculation (int number1, int number2) throws ArithmeticException {
-        int result = 0;
+    public int calculation(int number1, int number2) throws ArithmeticException {
+        int arabianResult = 0;
         if (Calculator.example.contains("+")) {
-            result = number1 + number2;
+            arabianResult = number1 + number2;
         } else if (Calculator.example.contains("-")) {
-            result = number1 - number2;
+            arabianResult = number1 - number2;
         } else if (Calculator.example.contains("*")) {
-            result = number1 * number2;
+            arabianResult = number1 * number2;
         } else if (Calculator.example.contains("/")) {
             if (number2 > 0) {
-                result = number1 / number2;
+                arabianResult = number1 / number2;
             } else {
                 throw new ArithmeticException("Неверный делитель");
             }
         }
-        return result;
+        return arabianResult;
     }
 }
